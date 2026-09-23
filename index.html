@@ -1,0 +1,407 @@
+---
+# Feel free to add content and custom Front Matter to this file.
+# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+
+layout: default
+---
+
+<h1>
+    CodecFlow: Efficient Fullband Speech Restoration via Flow Matching in a Neural Codec Latent Space
+</h1>
+
+<p class="left-align">
+    Huajian Fang, Simon Welker, Timo Gerkmann
+</p>
+<p class="left-align">
+</p>
+
+<h2>
+    Abstract
+</h2>
+
+<p class="abstract">
+    Generative models have made significant progress in speech restoration tasks. Although most generative pipelines operate in the spectral domain, recent advances in neural codecs have sparked interest in operating in latent spaces. In this work, we focus on a residual vector-quantized latent space, in which the codebook is a finite set of feature vectors embedded in a continuous vector space. Most existing studies typically model them as discrete variables; however, how to exploit the continuous geometric properties of embedding vectors to achieve generative speech restoration remains underexplored. For this, we explore conditional flow matching as a generative modeling approach in the codec's quantized latent space for the tasks of speech enhancement, speech dereverberation, and bandwidth extension. We compare against a predictive model that shares the same architecture and is trained in the same latent space to demonstrate the contribution of generative modeling, and against a spectral-domain diffusion method to investigate modeling in the latent space. We reveal that operating in the latent space can reduce the computational cost of generative speech restoration by two orders of magnitude. We further analyze where the generative formulation is beneficial across the three tasks. 
+</p>
+
+
+
+<h2>
+    Audio Examples: Speech Dereverberation
+</h2>
+
+<p>
+    Below we present audio examples from LatentFM, LatentPredictive, and SGMSE+  <span class="reference" data-ref="sgmseplus"></span>
+</p>
+
+<p>
+</p>
+
+<p>Select an audio file: &nbsp;&nbsp; <br class="smallmobile-only">
+    <select id="audioSelect0" onchange="playAudio0()">
+        <option value="dereverberation_emo_interest_freeform_0_-1_654_t60=1.05" selected="true"> Speech 1 </option>
+        <option value="dereverberation_emo_neutral_freeform_0_-1_173_t60=0.80"> Speech 2 </option>
+        <option value="dereverberation_rainbow_04_whisper_0_-1_39_t60=1.27"> Speech 3 </option>
+        <option value="dereverberation_rainbow_06_slow_0_-1_735_t60=1.09"> Speech 4 </option>
+    </select>
+</p>
+
+<p class="black">
+    Reverberant (Input):<br>
+    <audio id="audioPlayer0Noisy" controls controlsList="nodownload">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio><br>
+
+    Clean (Target):<br>
+    <audio id="audioPlayer0Clean" controls controlsList="nodownload">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio><br>
+
+    SGMSE+:<br>
+    <audio id="audioPlayer0SGMSE" controls controlsList="nodownload">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio><br>
+
+    LatentPredictive:<br>
+    <audio id="audioPlayer0LatentPredictive" controls controlsList="nodownload">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio><br>
+
+    LatentFM :<br>
+    <audio id="audioPlayer0LatentFM" controls controlsList="nodownload">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio><br>
+
+</p>
+
+<script>
+    function playAudio0() {
+        var audioPlayerNoisy = document.getElementById('audioPlayer0Noisy');
+        var audioPlayerClean = document.getElementById('audioPlayer0Clean');
+        var audioPlayerLatentFM = document.getElementById('audioPlayer0LatentFM');
+        var audioPlayerLatentPredictive = document.getElementById('audioPlayer0LatentPredictive');
+        var audioPlayerSGMSE = document.getElementById('audioPlayer0SGMSE');
+
+        var selectedAudio = document.getElementById('audioSelect0').value;
+        if (selectedAudio) {
+            // Get the audio source
+            var audioSourceNoisy = audioPlayerNoisy.getElementsByTagName('source')[0];
+            var audioSourceClean = audioPlayerClean.getElementsByTagName('source')[0];
+            var audioSourceLatentFM = audioPlayerLatentFM.getElementsByTagName('source')[0];
+            var audioSourceLatentPredictive = audioPlayerLatentPredictive.getElementsByTagName('source')[0];
+            var audioSourceSGMSE = audioPlayerSGMSE.getElementsByTagName('source')[0];
+
+            audioSourceNoisy.src = "assets/audio/" + selectedAudio + "_noisy.wav";
+            audioPlayerNoisy.load();
+            audioSourceClean.src = "assets/audio/" + selectedAudio + "_clean.wav";
+            audioPlayerClean.load();
+            audioSourceLatentFM.src = "assets/audio/" + selectedAudio + "_latent_flow.wav";
+            audioPlayerLatentFM.load();
+            audioSourceLatentPredictive.src = "assets/audio/" + selectedAudio + "_predictive.wav";
+            audioPlayerLatentPredictive.load();
+            audioSourceSGMSE.src = "assets/audio/" + selectedAudio + "_sgmse.wav";
+            audioPlayerSGMSE.load();
+        }
+    }
+
+    playAudio0();
+</script>
+
+
+<h2>
+    Audio Examples: Speech Enhancement
+</h2>
+
+<p>
+    Below we present audio examples from LatentFM, LatentPredictive, and SGMSE+.
+</p>
+
+<p>Select an audio file: &nbsp;&nbsp; <br class="smallmobile-only">
+    <select id="audioSelect1" onchange="playAudio1()">
+        <option value="speech_enhancement_emo_extasy_sentences_0_-1_270_snr=14.1" selected="true">Speech 1 </option>
+        <option value="speech_enhancement_emo_guilt_freeform_0_-1_379_snr=-2.0"> Speech 2 </option>
+        <option value="speech_enhancement_emo_adoration_freeform_0_-1_21_snr=3.6">Speech 3 </option>
+        <option value="speech_enhancement_emo_extasy_sentences_0_-1_196_snr=12.1"> Speech 4 </option>
+        <option value="speech_enhancement_emo_disgust_freeform_0_-1_124_snr=0.4">Speech 5 </option>
+    </select>
+</p>
+
+<p class="black">
+    Noisy (Input):<br>
+    <audio id="audioPlayer1Noisy" controls controlsList="nodownload">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio><br>
+
+    Clean (Target):<br>
+    <audio id="audioPlayer1Clean" controls controlsList="nodownload">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio><br>
+
+    SGMSE+:<br>
+    <audio id="audioPlayer1SGMSE" controls controlsList="nodownload">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio><br>
+
+    LatentPredictive:<br>
+    <audio id="audioPlayer1LatentPredictive" controls controlsList="nodownload">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio><br>
+
+    LatentFM :<br>
+    <audio id="audioPlayer1LatentFM" controls controlsList="nodownload">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio><br>
+
+</p>
+
+<script>
+    function playAudio1() {
+        var audioPlayerNoisy = document.getElementById('audioPlayer1Noisy');
+        var audioPlayerClean = document.getElementById('audioPlayer1Clean');
+        var audioPlayerLatentFM = document.getElementById('audioPlayer1LatentFM');
+        var audioPlayerLatentPredictive = document.getElementById('audioPlayer1LatentPredictive');
+        var audioPlayerSGMSE = document.getElementById('audioPlayer1SGMSE');
+
+        var selectedAudio = document.getElementById('audioSelect1').value;
+        if (selectedAudio) {
+            // Get the audio source
+            var audioSourceNoisy = audioPlayerNoisy.getElementsByTagName('source')[0];
+            var audioSourceClean = audioPlayerClean.getElementsByTagName('source')[0];
+            var audioSourceLatentFM = audioPlayerLatentFM.getElementsByTagName('source')[0];
+            var audioSourceLatentPredictive = audioPlayerLatentPredictive.getElementsByTagName('source')[0];
+            var audioSourceSGMSE = audioPlayerSGMSE.getElementsByTagName('source')[0];
+
+            audioSourceNoisy.src = "assets/audio/" + selectedAudio + "_noisy.wav";
+            audioPlayerNoisy.load();
+            audioSourceClean.src = "assets/audio/" + selectedAudio + "_clean.wav";
+            audioPlayerClean.load();
+            audioSourceLatentFM.src = "assets/audio/" + selectedAudio + "_latent_flow.wav";
+            audioPlayerLatentFM.load();
+            audioSourceLatentPredictive.src = "assets/audio/" + selectedAudio + "_predictive.wav";
+            audioPlayerLatentPredictive.load();
+            audioSourceSGMSE.src = "assets/audio/" + selectedAudio + "_sgmse.wav";
+            audioPlayerSGMSE.load();
+        }
+    }
+
+    playAudio1();
+</script>
+
+
+<h2>
+    Audio Examples: Bandwidth Extension
+</h2>
+
+<p>
+    Below we present audio examples from LatentFM, LatentPredictive, and SGMSE+.
+</p>
+
+<p>Select an audio file: &nbsp;&nbsp; <br class="smallmobile-only">
+    <select id="audioSelect2" onchange="playAudio2()">
+        
+        <option value="bwe_sentences_02_loud_0_-1_311_down=8" selected="true"> Speech 1 </option>
+        <option value="bwe_rainbow_02_whisper_0_-1_43_down=8"> Speech 2 </option>
+        <option value="bwe_emo_adoration_freeform_0_-1_624_down=8"> Speech 3 </option>
+        <option value="bwe_emo_adoration_freeform_0_-1_68_down=4"> Speech 4 </option>
+        <option value="bwe_rainbow_07_slow_0_-1_474_down=2"> Speech 5 </option>
+    </select>
+</p>
+
+<p class="black">
+    Low-Bandwidth (Input):<br>
+    <audio id="audioPlayer2Noisy" controls controlsList="nodownload">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio><br>
+
+    Clean (Target):<br>
+    <audio id="audioPlayer2Clean" controls controlsList="nodownload">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio><br>
+
+    SGMSE+:<br>
+    <audio id="audioPlayer2SGMSE" controls controlsList="nodownload">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio><br>
+
+    LatentPredictive:<br>
+    <audio id="audioPlayer2LatentPredictive" controls controlsList="nodownload">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio><br>
+
+    LatentFM:<br>
+    <audio id="audioPlayer2LatentFM" controls controlsList="nodownload">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio><br>
+
+</p>
+
+<script>
+    function playAudio2() {
+        var audioPlayerNoisy = document.getElementById('audioPlayer2Noisy');
+        var audioPlayerClean = document.getElementById('audioPlayer2Clean');
+        var audioPlayerLatentFM = document.getElementById('audioPlayer2LatentFM');
+        var audioPlayerLatentPredictive = document.getElementById('audioPlayer2LatentPredictive');
+        var audioPlayerSGMSE = document.getElementById('audioPlayer2SGMSE');
+
+        var selectedAudio = document.getElementById('audioSelect2').value;
+        if (selectedAudio) {
+            // Get the audio source
+            var audioSourceNoisy = audioPlayerNoisy.getElementsByTagName('source')[0];
+            var audioSourceClean = audioPlayerClean.getElementsByTagName('source')[0];
+            var audioSourceLatentFM = audioPlayerLatentFM.getElementsByTagName('source')[0];
+            var audioSourceLatentPredictive = audioPlayerLatentPredictive.getElementsByTagName('source')[0];
+            var audioSourceSGMSE = audioPlayerSGMSE.getElementsByTagName('source')[0];
+
+            audioSourceNoisy.src = "assets/audio/" + selectedAudio + "_noisy.wav";
+            audioPlayerNoisy.load();
+            audioSourceClean.src = "assets/audio/" + selectedAudio + "_clean.wav";
+            audioPlayerClean.load();
+            audioSourceLatentFM.src = "assets/audio/" + selectedAudio + "_latent_flow.wav";
+            audioPlayerLatentFM.load();
+            audioSourceLatentPredictive.src = "assets/audio/" + selectedAudio + "_predictive.wav";
+            audioPlayerLatentPredictive.load();
+            audioSourceSGMSE.src = "assets/audio/" + selectedAudio + "_sgmse.wav";
+            audioPlayerSGMSE.load();
+        }
+    }
+
+    playAudio2();
+</script>
+
+
+
+<h2>
+    References
+</h2>
+
+<ol id="refList" style="list-style-type: none; padding: 0;">
+    <!-- JavaScript will populate this list -->
+</ol>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const references = {
+            "sgmseplus": "J. Richter, S. Welker, J.-M. Lemercier, B. Lay, and T. Gerkmann, “Speech enhancement and dereverberation with diffusion-based generative models,” IEEE/ACM Transactions on Audio, Speech, and Language Processing (TASLP), vol. 31, pp. 2351-2364, 2023.",
+        };
+
+        // Collect keys in order of their appearance, without duplication
+        const referenceElements = document.querySelectorAll('.reference');
+        const orderedKeys = [];
+        referenceElements.forEach(element => {
+            // Split the keys and iterate over them
+            const keys = element.dataset.ref.split(' ');
+            keys.forEach(key => {
+                // Add key if it's not already in the list to maintain first appearance order
+                if (!orderedKeys.includes(key) && references[key]) {
+                    orderedKeys.push(key);
+                }
+            });
+        });
+        let sortedReferences = {};
+        // Populate the sorted references object based on orderedKeys
+        orderedKeys.forEach(key => {
+            if (references[key]) {
+                sortedReferences[key] = references[key];
+            }
+        });
+
+        function changeId(element) {
+            // Change the id of the clicked element to the next one
+            key = element.id.split('-')[1];
+            elem = document.getElementById(`link-${key}`);
+            elem.href = `#${element.id}`;
+        }
+
+        const refList = document.getElementById('refList');
+        const refTotal = Object.keys(sortedReferences).length;
+        const maxWidth = `${Math.ceil(Math.log10(refTotal + 1)) * 10 + 5}px`;
+
+        Object.entries(sortedReferences).forEach(([key, ref], index) => {
+            const refNumber = index + 1;
+            const li = document.createElement('li');
+            li.id = `ref-${refNumber}`;
+            li.style.display = 'flex';
+            li.style.alignItems = 'baseline';
+            li.style.marginBottom = '5px';
+
+            const numberSpan = document.createElement('span');
+            numberSpan.style.fontWeight = 'regular';
+            numberSpan.style.minWidth = maxWidth;
+            numberSpan.style.textAlign = 'right';
+            numberSpan.style.marginRight = '10px';
+            numberSpan.style.whiteSpace = 'nowrap';
+
+            const numberLink = document.createElement('a');
+            numberLink.href = `#cite-${key}-0`;
+            numberLink.id = `link-${key}`;
+            numberLink.textContent = `[${refNumber}]`;
+            numberLink.style.textDecoration = 'none';
+            numberSpan.appendChild(numberLink);
+
+            const textSpan = document.createElement('span');
+            textSpan.textContent = ref;
+
+            li.appendChild(numberSpan);
+            li.appendChild(textSpan);
+            refList.appendChild(li);
+        });
+
+        referenceCounter = {};
+        // Making In-text references linkable and combine multiple references
+        document.querySelectorAll('.reference').forEach(span => {
+            const keys = span.getAttribute('data-ref').split(' ');
+            const refNumbers = keys.map(key => {
+                const index = Object.keys(sortedReferences).indexOf(key);
+                return index + 1;
+            });
+            keys.forEach((key, i) => {
+                if (referenceCounter[key] >= 0) {
+                    referenceCounter[key]++;
+                } else {
+                    referenceCounter[key] = 0;
+                }
+
+                // Set up string if there are multiple references
+                if (keys.length > 1) {
+                    if (i === 0) {
+                        refText = `[${refNumbers[i]}, `;
+                    } else if (i === keys.length - 1) {
+                        refText = `${refNumbers[i]}]`;
+                    } else {
+                        refText = `${refNumbers[i]}, `;
+                    }
+                // Set up string if there is only one reference
+                } else {
+                    refText = `[${refNumbers[i]}]`;
+                }
+
+                const citeId = `cite-${key}-${referenceCounter[key]}`;
+                const citeLink = document.createElement('a');
+                citeLink.href = `#ref-${refNumbers[i]}`;
+                citeLink.textContent = refText;
+                citeLink.id = citeId;
+                citeLink.style.textDecoration = 'none';
+                citeLink.addEventListener('click', function () {
+                    changeId(this);
+                });
+
+                span.appendChild(citeLink);
+            });
+        });
+
+    });
+</script>
